@@ -420,6 +420,20 @@ function AreaDashboard() {
           </ResponsiveContainer>
         </Card>
 
+        {/* 절대가격 추이 */}
+        <Card title="표준지 주택지 평균가 추이 (2022–2026)" sub="선택한 구의 주택지 표준지 평균 엔/㎡. 비교 구 선택 칩 반영." src="국토교통성 감정평가서 CSV (TAKUCHI_k_27)">
+          <ResponsiveContainer width="100%" height={280}>
+            <LineChart data={absSeries} margin={{ top: 8, right: 16, left: 8, bottom: 4 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={C.line} />
+              <XAxis dataKey="year" tick={{ fontFamily: FN, fontSize: 11, fill: C.sub }} />
+              <YAxis tickFormatter={fmtMan} tick={{ fontFamily: FN, fontSize: 11, fill: C.sub }} width={50} />
+              <Tooltip {...tip} formatter={(v) => v == null ? "—" : fmtInt(v) + " 엔/㎡"} />
+              {compare.length <= 8 && <Legend wrapperStyle={{ fontFamily: FN, fontSize: 12 }} />}
+              {compare.map((w, i) => <Line key={w} type="monotone" dataKey={w} stroke={cmpColors[i]} strokeWidth={2.2} dot={false} />)}
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+
         {/* 인구 증감률 랭킹 + 분류 */}
         <Card title="인구 증감률 랭킹 & 분류 (2015→2025)" sub="실측 인구 증감률에 따른 4단계 분류. 투자 순위가 아니라 인구 흐름의 데이터 패턴입니다." src="동 제10표 — 2015·2025 실측 인구로 계산">
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 12 }}>
@@ -498,20 +512,6 @@ function AreaDashboard() {
               <Bar dataKey={useType} radius={[0, 4, 4, 0]} fill={useType === "h" ? C.housing : C.commercial}
                 label={{ position: "right", formatter: (v) => fmtPct(v), fontSize: 10, fill: C.sub, fontFamily: FN }} />
             </BarChart>
-          </ResponsiveContainer>
-        </Card>
-
-        {/* 절대가격 추이 */}
-        <Card title="표준지 주택지 평균가 추이 (2022–2026)" sub="선택한 구의 주택지 표준지 평균 엔/㎡. 비교 구 선택 칩 반영." src="국토교통성 감정평가서 CSV (TAKUCHI_k_27)">
-          <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={absSeries} margin={{ top: 8, right: 16, left: 8, bottom: 4 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke={C.line} />
-              <XAxis dataKey="year" tick={{ fontFamily: FN, fontSize: 11, fill: C.sub }} />
-              <YAxis tickFormatter={fmtMan} tick={{ fontFamily: FN, fontSize: 11, fill: C.sub }} width={50} />
-              <Tooltip {...tip} formatter={(v) => v == null ? "—" : fmtInt(v) + " 엔/㎡"} />
-              {compare.length <= 8 && <Legend wrapperStyle={{ fontFamily: FN, fontSize: 12 }} />}
-              {compare.map((w, i) => <Line key={w} type="monotone" dataKey={w} stroke={cmpColors[i]} strokeWidth={2.2} dot={false} />)}
-            </LineChart>
           </ResponsiveContainer>
         </Card>
 
